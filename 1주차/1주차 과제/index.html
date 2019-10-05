@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>1주차 과제</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!--Javascript-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+  <script type="text/javascript">
+      function orderPost() {
+          let name = $('#order_name').val();
+          let count = $('#order_count').val();
+          let address = $('#order_address').val();
+          let phone = $('#order_phone').val();
+          let item = '아이폰XS';
+
+          $.ajax({
+              type: "POST",
+              url: "http://spartacodingclub.shop/order",
+              data: {
+                  name_give: name,
+                  count_give: count,
+                  address_give: address,
+                  phone_give: phone,
+                  item_give: item
+              },
+              success: function (response) {
+                  if (response['result'] == 'success') {
+                      alert('주문 완료')
+                      window.location.reload();
+                  } else {
+                      alert('실패')
+                  }
+              }
+          })
+      }
+
+      $(document).ready(function(){
+          $('#orders-box').html('');
+          listing();
+      });
+
+      function listing() {
+          $.ajax({
+              type: "GET",
+              url: "http://spartacodingclub.shop/order?item_give=아이폰XS",
+              data: {},
+              success: function (response) {
+                  if (response['result'] == 'success') {
+                      let orders = response['orders'];
+                      for (let i = 0; i < orders.length; i++) {
+                          make_card(orders[i]['item'], orders[i]['name'], orders[i]['count'], orders[i]['address'],
+                              orders[i]['phone'])
+                      }
+                  } else {
+                      alert('받아오지 못했습니다.');
+                  }
+              }
+          })
+      }
+
+      function make_card(item, name, count, address, phone) {
+          let temp_html = '<tr>\
+            <td>' + item + '</td>\
+            <td>' + name + '</td>\
+            <td>' + count + '</td>\
+            <td>' + address + '</td>\
+            <td>' + phone + '</td>\
+          </tr>';
+          $('#orders-box').append(temp_html);
+      }
+
+
+  </script>
+
+
+</head>
+<body>
+<div class="container my-5 border border-info">
+  <div class="row">
+    <div class="col-12 col-md-12 col-sm-12 col-lg-6 col-xl-6">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner col-md-auto" style="height:565px; background-size: auto;">
+          <div class="carousel-item h-100 active">
+            <img src="./src/toyO-special.png" class="d-block w-100 h-100" alt="...">
+          </div>
+          <div class="carousel-item h-100">
+            <img src="./src/ben-kolde-430912.jpg" class="d-block w-100 h-100" alt="...">
+          </div>
+          <div class="carousel-item h-100">
+            <img src="./src/white-iphone-6-png-image-22.png" class="d-block w-100 h-100" alt="...">
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"> <span
+                class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"> <span
+                class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mt-5">
+      <h1 class="d-block">상품제목</h1>
+      <h3 class="d-block">가격 : 600,000원 / 개</h3>
+      <p class="mt-5">이놈의 IPHONE은 계속 신형이 나오는데 나는 할부의 노예라 새로 바꾸지도 못한다.</p>
+    </div>
+  </div>
+  <div class="container">
+    <form>
+      <div class="input-group mb-3 mt-5">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="name">주문자 성함</span>
+        </div>
+        <input type="text" id="order_name" class="form-control" placeholder="성함을 입력해주세요." aria-label="Username"
+               aria-describedby="name">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="quantity">수량</span>
+        </div>
+        <select id="order_count" class="custom-select" for="customSelect" aria-describedby="quantity">
+          <option selected>수량을 선택해주세요.</option>
+          <option value="1">1 개</option>
+          <option value="2">2 개</option>
+          <option value="3">3 개</option>
+          <option value="4">4 개</option>
+          <option value="5">5 개</option>
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="adress">주소</span>
+        </div>
+        <input type="text" id="order_address" class="form-control" placeholder="배송받으실 주소를 입력해주세요." aria-label="adress"
+               aria-describedby="adress">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="number">전화번호</span>
+        </div>
+        <input type="text" id="order_phone" class="form-control" placeholder="주문하시는분의 연락처를 입력해주세요." aria-label="number"
+               aria-describedby="number">
+      </div>
+      <button onclick="orderPost()" type="submit" class="btn btn-primary col-2 mb-5 col-12">주문하기</button>
+    </form>
+  </div>
+
+  <div class="orders">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">상품명</th>
+        <th scope="col">이름</th>
+        <th scope="col">수량</th>
+        <th scope="col">주소</th>
+        <th scope="col">전화번호</th>
+      </tr>
+      </thead>
+      <tbody id="orders-box">
+
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

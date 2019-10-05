@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>2주차 강의 내용 정리</title>
+</head>
+<body>
+
+<script>
+    // List를 모두 출력해서 확인해볼 때
+    let names = ['Bob', 'Kay', 'Juice']
+    for (let j = 0; j < names.length; j++) { // names 리스트의 길이 미만까지 돌아라!
+        console.log(names[j]);
+    }
+    /*    반복문과 조건문의 결합
+        "리스트의 값을 돌면서 나이가 20세 미만인 사람을 출력하기"*/
+    let people = [{'name':'bob','age':24},
+        {'name':'james','age':18},
+        {'name':'kay','age':30},
+        {'name':'john','age':35}]
+
+    for (let i = 0 ; i < people.length; i++) {
+        if (people[i]['age'] < 20) {
+            console.log(people[i]);
+        }
+    }
+</script>
+
+</body>
+</html>

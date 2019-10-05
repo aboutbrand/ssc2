@@ -1,0 +1,35 @@
+        body {
+            background-color: teal;
+            color: white;
+            height: 100vh;
+            font-family: 'Song Myung', serif;
+
+        }
+
+        h1 {
+            text-align: center;
+            grid-column: 1 / 6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 3fr);
+            grid-gap: 10px;
+            grid-auto-rows: minmax(100px, auto);
+        }
+
+        #first {
+            text-align: center;
+            grid-row: 2;
+            grid-column: 2 / 5;
+            display: inline-grid;
+        }
+
+        #login {
+            text-align: center;
+            margin: 25px auto;
+            display: block;
+            background-color: white;
+            color: #333;
+            padding: 15px 25px;
+        }
